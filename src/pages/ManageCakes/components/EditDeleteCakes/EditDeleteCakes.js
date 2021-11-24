@@ -1,11 +1,31 @@
 import Checkbox from '@mui/material/Checkbox';
 import React, { useEffect, useState } from 'react';
 import customAxios from "../../../../utils/interceptor";
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Slide from '@mui/material/Slide';
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 export default function EditDeleteCake() {
   const [getCases, setCases] = useState([]);
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   useEffect(async () => {
     const result = await customAxios.get(`case/allcases`);
@@ -14,9 +34,9 @@ export default function EditDeleteCake() {
     }
   }, []);
 
-  const handleCaseDelete = async (id) =>{
+  const handleCaseDelete = async (id) => {
     let confirm = window.confirm('Are you sure you want to delete.');
-    if(confirm){
+    if (confirm) {
       const result = await customAxios.delete(`case/delete/${id}`);
       if (result.data.status == 'success') {
         alert('Deleted Successfully');
@@ -67,6 +87,24 @@ export default function EditDeleteCake() {
                       scope="col"
                       className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
+                      Current
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Rate
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Disease
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
                       Content
                     </th>
                     <th
@@ -95,11 +133,25 @@ export default function EditDeleteCake() {
                         <div className="text-sm text-gray-900">{el.donationRequirement}</div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-gray-900">{el.current}</div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-gray-900">{el.rate}</div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-gray-900">{el.disease}</div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm text-gray-900" style={{ width: '280px !important', whiteSpace: 'normal' }}>{el.content}</div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <a onClick={handleClickOpen}  className="cursor-pointer text-white rounded-sm  bg-green-500 p-2 text-xs">
+                          EDIT
+                        </a>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <a onClick={() => { handleCaseDelete(el.id) }} href="#" className="cursor-pointer text-white rounded-sm  bg-red-500 p-2 text-xs">
-                          Delete
+                          DELETE
                         </a>
                       </td>
                     </tr>
@@ -109,6 +161,27 @@ export default function EditDeleteCake() {
             </div>
           </div>
         </div>
+      </div>
+      <div>
+        <Dialog
+          open={open}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={handleClose}
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle>{"Use Google's location service?"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-slide-description">
+              Let Google help apps determine location. This means sending anonymous
+              location data to Google, even when no apps are running.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Disagree</Button>
+            <Button onClick={handleClose}>Agree</Button>
+          </DialogActions>
+        </Dialog>
       </div>
     </React.Fragment>
   )

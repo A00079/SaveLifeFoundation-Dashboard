@@ -82,6 +82,10 @@ const AddOffers = () => {
         bodyFormData.append('donationRequirement', casesData.donationRequirement);
         bodyFormData.append('needersName', casesData.needersName);
         bodyFormData.append('content', casesData.content);
+        bodyFormData.append('rate', casesData.rate);
+        bodyFormData.append('current', casesData.current);
+        bodyFormData.append('disease', casesData.disease);
+
 
         axios({
             method: "POST",
@@ -164,7 +168,7 @@ const AddOffers = () => {
                                 />
                             </div>
                             <div className="w-full">
-                            <TextBox
+                                <TextBox
                                     type="text"
                                     required={true}
                                     orientation="vertical"
@@ -176,34 +180,54 @@ const AddOffers = () => {
                                     onChange={handleInputChange}
                                 />
                             </div>
+                            <TextBox
+                                type="text"
+                                required={true}
+                                orientation="vertical"
+                                name="disease"
+                                placeHolder="disease"
+                                isLabel={true}
+                                label="disease"
+                                value={input.disease}
+                                onChange={handleInputChange}
+                            />
                         </div>
                         <div className="col-span-4 w-full space-y-5 mt-5">
-                            <div className="w-full">
                             <TextBox
-                                    type="text"
-                                    required={true}
-                                    orientation="vertical"
-                                    name="donationRequirement"
-                                    placeHolder="Donation Required"
-                                    isLabel={true}
-                                    label="Donation Required"
-                                    value={input.donationRequirement}
-                                    onChange={handleInputChange}
-                                />
-                            {/* <TextBox
-                                    type="text"
-                                    required={true}
-                                    orientation="vertical"
-                                    name="donationrequired"
-                                    placeHolder="Donation Required"
-                                    isLabel={true}
-                                    label="Donation Required"
-                                    value={input.donationRequired}
-                                    onChange={handleInputChange}
-                                /> */}
-                            </div>
-
+                                type="text"
+                                required={true}
+                                orientation="vertical"
+                                name="donationRequirement"
+                                placeHolder="Donation Required"
+                                isLabel={true}
+                                label="Donation Required"
+                                value={input.donationRequirement}
+                                onChange={handleInputChange}
+                            />
+                            <TextBox
+                                type="text"
+                                required={true}
+                                orientation="vertical"
+                                name="current"
+                                placeHolder="Current"
+                                isLabel={true}
+                                label="Current"
+                                value={input.current}
+                                onChange={handleInputChange}
+                            />
+                            <TextBox
+                                type="text"
+                                required={true}
+                                orientation="vertical"
+                                name="rate"
+                                placeHolder="Rate"
+                                isLabel={true}
+                                label="Rate"
+                                value={input.rate}
+                                onChange={handleInputChange}
+                            />
                         </div>
+                        
                         <div className="col-span-12 w-full space-y-5 mt-5">
                             <div className="w-full">
                                 <TextBox
