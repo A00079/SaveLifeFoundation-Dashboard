@@ -82,8 +82,8 @@ export default function EditDeleteCake() {
     bodyFormData.append('disease', !!casesData.disease ? casesData.disease : editCaseData.disease);
 
     axios({
-      method: "POST",
-      url: "https://savelifefoundation.org.in/api/v1/case/add",
+      method: "PATCH",
+      url: `https://savelifefoundation.org.in/api/v1/case/edit/${editCaseData.id}`,
       data: bodyFormData,
       headers: { "Content-Type": "multipart/form-data" },
     })
